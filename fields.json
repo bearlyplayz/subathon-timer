@@ -1,0 +1,387 @@
+{
+  "titleFontFamily": {
+    "group": "Title",
+    "type": "googleFont",
+    "label": "Select a font for the title:",
+    "value": "Finger Paint"
+  },
+  "titleFontSize": {
+    "group": "Title",
+    "type": "number",
+    "label": "Title Font Size (px)",
+    "value": 72,
+    "min": 10,
+    "max": 500,
+    "step": 1
+  },
+  "titleColor": {
+    "group": "Title",
+    "type": "colorpicker",
+    "label": "Title Color",
+    "value": "#FFFFFF"
+  },
+  "titleText": {
+    "group": "Title",
+    "type": "text",
+    "label": "Timer Name (Leave blank for no title)",
+    "value": "Subathon Timer"
+  },
+
+
+  "eventFadeMs": {
+    "group": "Event",
+    "type": "number",
+    "label": "Event Message Fade (ms)",
+    "value": 4500,
+    "min": 0,
+    "max": 30000,
+    "step": 100
+  },
+  "eventBackgroundColor": {
+    "group": "Event",
+    "type": "colorpicker",
+    "label": "Event Box Background Color",
+    "value": "#000000"
+  },
+  "eventMessageLimiter": {
+    "group": "Event",
+    "type": "hidden",
+    "label": "--- Event message settings ---"
+  },
+  "eventMessageFontFamily": {
+    "group": "Event",
+    "type": "googleFont",
+    "label": "Font for Event Message",
+    "value": "Finger Paint"
+  },
+  "eventMessageFontSize": {
+    "group": "Event",
+    "type": "number",
+    "label": "Event Message Font Size (px)",
+    "value": 38,
+    "min": 10,
+    "max": 500,
+    "step": 1
+  },
+  "eventMessageColor": {
+    "group": "Event",
+    "type": "colorpicker",
+    "label": "Event Message Color",
+    "value": "#FFFFFF"
+  },
+  "eventMessageBackgroundColor": {
+    "group": "Event",
+    "type": "colorpicker",
+    "label": "Event Message Background Color",
+    "value": "#000000"
+  },
+
+  "eventEffectLimiter": {
+    "group": "Event",
+    "type": "hidden",
+    "label": "--- Event effect settings ---"
+  },
+  "eventEffectFontFamily": {
+    "group": "Event",
+    "type": "googleFont",
+    "label": "Font for Event Effect",
+    "value": "Finger Paint"
+  },
+  "eventEffectFontSize": {
+    "group": "Event",
+    "type": "number",
+    "label": "Event Effect Font Size (px)",
+    "value": 38,
+    "min": 10,
+    "max": 500,
+    "step": 1
+  },
+  "eventEffectColor": {
+    "group": "Event",
+    "type": "colorpicker",
+    "label": "Event Effect Text Color",
+    "value": "#FFFF00"
+  },
+  "eventEffectBackgroundColor": {
+    "group": "Event",
+    "type": "colorpicker",
+    "label": "Event Effect Background Color",
+    "value": "#000000"
+  },
+
+
+  "timerFontFamily": {
+    "group": "Timer",
+    "type": "googleFont",
+    "label": "Select a font for the timer:",
+    "value": "Finger Paint"
+  },
+  "timerFontSize": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer Font Size (px)",
+    "value": 150,
+    "min": 10,
+    "max": 500,
+    "step": 1
+  },
+  "timerColor": {
+    "group": "Timer",
+    "type": "colorpicker",
+    "label": "Timer Color",
+    "value": "#FFFFFF"
+  },
+  "timerBackgroundColor": {
+    "group": "Timer",
+    "type": "colorpicker",
+    "label": "Timer Background Color",
+    "value": "#000000"
+  },
+  "startSeconds": {
+    "group": "Logic",
+    "type": "number",
+    "label": "Starting Time (seconds)",
+    "value": 600,
+    "min": 0,
+    "max": 86400,
+    "step": 1
+  },
+
+
+  "startPaused": {
+    "group": "Logic",
+    "type": "checkbox",
+    "label": "Start Paused",
+    "value": true
+  },
+  "allowEventsWhilePaused": {
+    "group": "Logic",
+    "type": "checkbox",
+    "label": "Allow events to add time while paused",
+    "value": true
+  },
+  "autoStopOnZero": {
+    "group": "Logic",
+    "type": "checkbox",
+    "label": "Auto-stop timer when it reaches zero",
+    "value": true
+  },
+
+
+  "followAddSeconds": {
+    "group": "Time Additions",
+    "type": "number",
+    "label": "Seconds to add per Follow",
+    "value": 60,
+    "min": 0,
+    "max": 86400,
+    "step": 1
+  },
+  "bitsUnitX": {
+    "group": "Time Additions",
+    "type": "number",
+    "label": "Bits: X threshold (per unit)",
+    "value": 100,
+    "min": 1,
+    "max": 100000,
+    "step": 1
+  },
+  "bitsUnitYSeconds": {
+    "group": "Time Additions",
+    "type": "number",
+    "label": "Bits: Y seconds added per X",
+    "value": 60,
+    "min": 1,
+    "max": 86400,
+    "step": 1
+  },
+  "subTier1AddSeconds": {
+    "group": "Time Additions",
+    "type": "number",
+    "label": "Seconds to add per Sub \u2014 Tier 1",
+    "value": 120,
+    "min": 0,
+    "max": 86400,
+    "step": 1
+  },
+  "subTier2AddSeconds": {
+    "group": "Time Additions",
+    "type": "number",
+    "label": "Seconds to add per Sub \u2014 Tier 2",
+    "value": 240,
+    "min": 0,
+    "max": 86400,
+    "step": 1
+  },
+  "subTier3AddSeconds": {
+    "group": "Time Additions",
+    "type": "number",
+    "label": "Seconds to add per Sub \u2014 Tier 3",
+    "value": 360,
+    "min": 0,
+    "max": 86400,
+    "step": 1
+  },
+  "subOtherAddSeconds": {
+    "group": "Time Additions",
+    "type": "number",
+    "label": "Seconds to add per Sub \u2014 Other / unknown tier",
+    "value": 120,
+    "min": 0,
+    "max": 86400,
+    "step": 1
+  },
+  "commandsPrefix": {
+    "group": "Commands",
+    "type": "text",
+    "label": "Commands Prefix",
+    "value": "!"
+  },
+
+  "broadcasterCommandsLimiter": {
+    "group": "Commands",
+    "type": "hidden",
+    "label": "--- Broadcaster command permissions ---"
+  },
+  "broadcasterSet": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Broadcaster can use !set command",
+    "value": true
+  },
+  "broadcasterIncrease": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Broadcaster can use !increase command",
+    "value": true
+  },
+  "broadcasterDecrease": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Broadcaster can use !decrease command",
+    "value": true
+  },
+  "broadcasterPause": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Broadcaster can use !pause command",
+    "value": true
+  },
+  "broadcasterStart": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Broadcaster can use !start command",
+    "value": true
+  },
+  "broadcasterStop": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Broadcaster can use !stop command",
+    "value": true
+  },
+  "broadcasterRevert": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Broadcaster can use !revert command",
+    "value": true
+  },
+  "moderatorCommandsLimiter": {
+    "group": "Commands",
+    "type": "hidden",
+    "label": "--- Moderator command permissions ---"
+  },
+  "moderatorSet": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Moderators can use !set command",
+    "value": true
+  },
+  "moderatorIncrease": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Moderators can use !increase command",
+    "value": true
+  },
+  "moderatorDecrease": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Moderators can use !decrease command",
+    "value": true
+  },
+  "moderatorPause": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Moderators can use !pause command",
+    "value": true
+  },
+  "moderatorStart": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Moderators can use !start command",
+    "value": true
+  },
+  "moderatorStop": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Moderators can use !stop command",
+    "value": true
+  },
+  "moderatorRevert": {
+    "group": "Commands",
+    "type": "checkbox",
+    "label": "Moderators can use !revert command",
+    "value": true
+  },
+
+
+  "followMessageText": {
+    "group": "Event Messages",
+    "type": "text",
+    "label": "Message for Follow",
+    "value": "New follower!"
+  },
+  "cheerMessageText": {
+    "group": "Event Messages",
+    "type": "text",
+    "label": "Message for Cheer/Bits",
+    "value": "Cheer!"
+  },
+  "subTier1MessageText": {
+    "group": "Event Messages",
+    "type": "text",
+    "label": "Message for Sub \u2014 Tier 1",
+    "value": "Tier 1 Sub!"
+  },
+  "subTier2MessageText": {
+    "group": "Event Messages",
+    "type": "text",
+    "label": "Message for Sub \u2014 Tier 2",
+    "value": "Tier 2 Sub!"
+  },
+  "subTier3MessageText": {
+    "group": "Event Messages",
+    "type": "text",
+    "label": "Message for Sub \u2014 Tier 3",
+    "value": "Tier 3 Sub!"
+  },
+  "subOtherMessageText": {
+    "group": "Event Messages",
+    "type": "text",
+    "label": "Message for Sub \u2014 Other/Unknown",
+    "value": "Subscription!"
+  },
+
+
+  "consoleLog": {
+    "group": "Debug",
+    "type": "checkbox",
+    "label": "Log to console (Log level)",
+    "value": false
+  },
+  "debugLog": {
+    "group": "Debug",
+    "type": "checkbox",
+    "label": "Log to console (Debug level)",
+    "value": false
+  }
+}
