@@ -1,236 +1,184 @@
 # StreamElements Subathon Timer — Custom Widget
 
-A clean, flexible **Subathon/Countdown timer** for Twitch built as a **StreamElements custom widget**. It reacts to follows, cheers (bits), and subscriptions with configurable time additions, shows a short event message overlay, and exposes chat commands for the broadcaster and/or moderators.
+Fully client‑side, sandbox‑safe Subathon / Marathon timer for a StreamElements Custom Widget. It reacts to follows, subs (tiered), cheers/bits, and provides rich chat command control (start, pause, stop, set, increase/decrease, revert). All styling, behavior, and permissions are configurable through the widget field settings defined in `fields.json`.
 
 ---
 
 ## ✨ Features
 
-- 🕒 Start/pause/stop a visible stream timer
-- ➕ Auto-add time on **follows**, **bits**, and **subs** (per-tier)
-- 💬 **Chat commands** with per‑role permissions (broadcaster, mods)
-- 🧩 Plug‑and‑play **custom widget** for StreamElements
-- 🎨 Fully themeable (Google Fonts, colors, sizes)
-- 🪄 Event message banner with fade-out
-- 🛠️ Debug logging options
-
-> Default styles, font bindings, and field controls are wired via StreamElements `{{variable}}` templating in **CSS** and **Fields**. See the **Styling** and **Configuration Reference** sections below.
-
----
-
-## 🚀 Quick Start (StreamElements)
-
-1. **Open** StreamElements dashboard → **Overlays** → choose an overlay (or create new) → **Edit**.
-2. In the left panel, click **+** → **Static / Custom** → **Custom widget** → **Add**.
-3. Select the new widget → open **Editor** panel (right side). You’ll see **HTML**, **CSS**, **JS**, and **Fields** tabs.
-4. **Paste the files** into each tab:
-   - **HTML** → use the snippet in this README (see _Minimal HTML_ below).
-   - **CSS**  → paste from your `styles.css`.
-   - **JS**   → paste from your `script.js`.
-   - **Fields** → paste from your `fields.json`.
-5. Press **Save** → **Preview** → **Launch** your overlay in OBS/Streamer software.
-
-> Tip: If you already have an older version, **Duplicate** the widget and upgrade safely.
-
-### Minimal HTML
-
-> The widget’s JS will usually manage state and render live values. The structure below matches the CSS class names so your styles apply immediately.
-
-```html
-<div class="container">
-  <h1 id="title"></h1>
-
-  <div class="timer">
-    <span class="timer-font" id="timer-text">00:10:00</span>
-  </div>
-
-  <div class="event hide" id="event-box">
-    <span class="event-message" id="event-message">New follower!</span>
-    <span class="event-effect" id="event-effect">+60s</span>
-  </div>
-</div>
-```
+- Add time automatically on: Follows, Bits (configurable X → Y seconds), Tier 1/2/3/Other Subs
+- Broadcaster & Moderator permission toggles per command (grant granular control)
+- Optional start paused / auto stop at zero / allow events while paused
+- Undo (revert) the last N time additions (history capped at 100)
+- Event message banner with separate message/effect styling & timed fade out
+- Google Fonts support for title, timer, event message, and effect text
+- All configuration exposed via `fields.json` (copy–paste into StreamElements Fields tab)
+- Pure HTML/CSS/JS – no external build step; safe inside the StreamElements sandbox
 
 ---
 
-## 🧩 What Goes Where
+## 📁 Repository Files
 
-- **HTML**: Structure only (title, timer text, event message box).
-- **CSS**: Visuals and fonts. Uses StreamElements field bindings like `{{titleFontFamily}}`, `{{timerColor}}`, etc. (See _Styling_.)
-- **JavaScript**: Core logic — timer state, event listeners for follows/bits/subs, chat command parsing, permissions, and DOM updates.
-- **Fields**: All user‑configurable options (fonts, sizes, colors, logic, time additions, command prefix & permissions, debug toggles).
-
----
-
-## 🎛️ Configuration Reference (Fields)
-
-Below are all available fields grouped by their section in the StreamElements **Fields** tab, with defaults and what they do.
-
-### Title
-
-- **titleFontFamily** (Google Font, default: _Finger Paint_) — Font for the title. fileciteturn0file2  
-- **titleFontSize** (px, default: 72) — Title font size. fileciteturn0file2  
-- **titleColor** (color, default: `#FFFFFF`) — Title text color. fileciteturn0file2  
-- **titleText** (text, default: `Subathon Timer`) — Title content; leave blank to hide. fileciteturn0file2  
-
-### Event
-
-- **eventFadeMs** (ms, default: 4500) — How long the event banner stays visible before fading. Set `0` to keep it persistent until replaced. fileciteturn0file2  
-- **eventBackgroundColor** (color, default: `#000000`) — Background of the event container. fileciteturn0file2  
-
-**Event Message (text part on the left):**
-
-- **eventMessageFontFamily** (Google Font, default: _Finger Paint_) — Font for the message (e.g., “New follower!”). fileciteturn0file2  
-- **eventMessageFontSize** (px, default: 38) — Size of the event message text. fileciteturn0file2  
-- **eventMessageColor** (color, default: `#FFFFFF`) — Event message text color. fileciteturn0file2  
-- **eventMessageBackgroundColor** (color, default: `#000000`) — Per‑span background behind the message. fileciteturn0file2  
-
-**Event Effect (numeric part on the right):**
-
-- **eventEffectFontFamily** (Google Font, default: _Finger Paint_) — Font for the effect text (e.g., “+60s”). fileciteturn0file2  
-- **eventEffectFontSize** (px, default: 38) — Size of the effect text. fileciteturn0file2  
-- **eventEffectColor** (color, default: `#FFFF00`) — Effect text color. fileciteturn0file2  
-- **eventEffectBackgroundColor** (color, default: `#000000`) — Per‑span background behind the effect. fileciteturn0file2  
-
-### Timer
-
-- **timerFontFamily** (Google Font, default: _Finger Paint_) — Timer digits font. fileciteturn0file2  
-- **timerFontSize** (px, default: 150) — Timer digits size. fileciteturn0file2  
-- **timerColor** (color, default: `#FFFFFF`) — Timer text color. fileciteturn0file2  
-- **timerBackgroundColor** (color, default: `#000000`) — Background behind the timer block. fileciteturn0file2  
-
-### Logic
-
-- **startSeconds** (number, default: 600) — Initial countdown value in seconds (e.g., `600` = 10 minutes). fileciteturn0file2  
-- **startPaused** (checkbox, default: true) — If checked, the timer loads in a paused state. fileciteturn0file2  
-- **allowEventsWhilePaused** (checkbox, default: true) — If checked, events can still add time even when the timer is paused. fileciteturn0file2  
-- **autoStopOnZero** (checkbox, default: true) — If checked, the timer auto‑stops when reaching zero (prevents negative time). fileciteturn0file2  
-
-### Time Additions
-
-- **followAddSeconds** (number, default: 60) — Seconds added per **follow**. fileciteturn0file2  
-- **bitsUnitX** (number, default: 100) — Bits threshold per unit (the “X”). fileciteturn0file2  
-- **bitsUnitYSeconds** (number, default: 60) — Seconds added per `bitsUnitX` bits (the “Y”). Example: with X=100 and Y=60, a 250‑bit cheer adds `floor(250/100)*60 = 120s`. fileciteturn0file2  
-- **subTier1AddSeconds** (number, default: 120) — Seconds added per Tier 1 sub. fileciteturn0file2  
-- **subTier2AddSeconds** (number, default: 240) — Seconds added per Tier 2 sub. fileciteturn0file2  
-- **subTier3AddSeconds** (number, default: 360) — Seconds added per Tier 3 sub. fileciteturn0file2  
-- **subOtherAddSeconds** (number, default: 120) — Seconds added for gifted, Prime, or unknown‑tier subs (implementation‑dependent). fileciteturn0file2  
-
-### Commands
-
-- **commandsPrefix** (text, default: `!`) — Prefix for chat commands, e.g., `!start`. fileciteturn0file2  
-
-**Broadcaster permissions** (toggle which commands the broadcaster may use):  
-
-- **broadcasterSet**, **broadcasterIncrease**, **broadcasterDecrease**, **broadcasterPause**, **broadcasterStart**, **broadcasterStop**, **broadcasterRevert** — all default to **true**. fileciteturn0file2  
-
-**Moderator permissions** (toggle which commands moderators may use):  
-
-- **moderatorSet**, **moderatorIncrease**, **moderatorDecrease**, **moderatorPause**, **moderatorStart**, **moderatorStop**, **moderatorRevert** — all default to **true**. fileciteturn0file2  
-
-### Event Messages (Text Templates)
-
-- **followMessageText** (default: `New follower!`) — Shown when a follow is detected. fileciteturn0file2  
-- **cheerMessageText** (default: `Cheer!`) — Shown on a bits cheer. fileciteturn0file2  
-- **subTier1MessageText** (default: `Tier 1 Sub!`) — Shown on Tier 1 sub. fileciteturn0file2  
-- **subTier2MessageText** (default: `Tier 2 Sub!`) — Shown on Tier 2 sub. fileciteturn0file2  
-- **subTier3MessageText** (default: `Tier 3 Sub!`) — Shown on Tier 3 sub. fileciteturn0file2  
-- **subOtherMessageText** (default: `Subscription!`) — Shown for other/unknown tier. fileciteturn0file2  
-
-### Debug
-
-- **consoleLog** (checkbox, default: false) — Enable normal console logging. fileciteturn0file2  
-- **debugLog** (checkbox, default: false) — Enable verbose debug logging. fileciteturn0file2  
+| File | Purpose |
+|------|---------|
+| [`index.html`](./index.html) | Widget HTML template (place into the Custom Widget HTML tab) |
+| [`styles.css`](./styles.css) | Widget styling (CSS tab) |
+| [`script.js`](./script.js) | Widget logic: timer core, events, commands (JS tab) |
+| [`fields.json`](./fields.json) | Field configuration schema (paste into the Fields → “Open Editor” JSON in StreamElements) |
+| [`LICENSE`](./LICENSE) | License (review before distribution) |
 
 ---
 
-## 🎨 Styling
+## 🚀 Quick Start (TL;DR)
 
-The provided CSS binds to Field values using StreamElements template variables (e.g., `{{titleFontFamily}}`, `{{timerFontSize}}px`, etc.). Key hooks/classes:
+1. In StreamElements: Overlays → Create New Overlay → pick your canvas size (or existing overlay).  
+2. Add Widget → Static / Custom → Custom Widget.  
+3. Open its settings panel.  
+4. HTML tab → Replace contents with [`index.html`](./index.html).  
+5. CSS tab → Replace with [`styles.css`](./styles.css).  
+6. JS tab → Replace with [`script.js`](./script.js).  
+7. Fields tab → Replace the full contents of [`fields.json`](./fields.json) → Save.  
+8. Adjust values (fonts, colors, seconds per event, permissions).  
+9. Position & scale the widget on the overlay canvas.  
+10. Save Overlay → Launch Preview → Test by triggering events or using chat commands.  
 
-- **.container** — grid layout that centers the content. fileciteturn0file1  
-- **#title** — title element; font family, color, and size map to Title fields. fileciteturn0file1  
-- **.timer / .timer-font** — the timer block and its numeric text; background and color map to Timer fields. fileciteturn0file1  
-- **.event** — event banner container with fade transition (`.hide` toggles opacity). fileciteturn0file1  
-- **.event-message / .event-effect** — per‑span styles for the message and the “+Xs” effect; each has own font, size, color, and background. fileciteturn0file1  
-
-> Remember to include your Google Fonts via the **Fields** (type `googleFont`) — StreamElements injects the selected fonts for you.
-
----
-
-## 💬 Chat Commands
-
-> The **prefix** is set by **commandsPrefix** (default `!`). Permissions are controlled by the **Broadcaster** and **Moderator** toggles in Fields.
-
-- **`!start`** — Start/resume the countdown.
-- **`!pause`** — Pause the timer (does not reset the time).
-- **`!stop`** — Stop the timer (implementation commonly pauses and optionally snaps to zero if at/below 0 depending on `autoStopOnZero`).
-- **`!set <seconds>`** — Set the timer to an exact number of seconds. Example: `!set 900` → 15:00.
-- **`!increase <seconds>`** — Add seconds to the timer. Example: `!increase 60`.
-- **`!decrease <seconds>`** — Subtract seconds. Example: `!decrease 30`.
-- **`!revert <how many messages>`** — Undo the most recent change. `!revert 2`
-
-> If `allowEventsWhilePaused` is enabled, follows/bits/subs can still add time even while paused; otherwise they’re ignored while paused.
+Done. Your subathon timer should now respond to events and commands.
 
 ---
 
-## 🧠 Event → Time Rules
+## 🛠 Detailed Installation Guide
 
-- **Follows** add `followAddSeconds` each.
-- **Bits (Cheers)** add time in units: for every `bitsUnitX` bits, add `bitsUnitYSeconds`. Example: with X=100 and Y=60, a 500‑bit cheer adds `5 * 60 = 300s`.
-- **Subs** add tier‑based seconds: Tier 1 → `subTier1AddSeconds`, Tier 2 → `subTier2AddSeconds`, Tier 3 → `subTier3AddSeconds`. Unknown/gift/Prime can use `subOtherAddSeconds`.
+### 1. Create / Open an Overlay
 
-When an event occurs, the widget can display a banner like:
+Go to StreamElements dashboard → Overlays. Either create a new overlay (choose resolution) or edit an existing one you use on stream.
 
-```
-[event message] [ +seconds ]
-```
+### 2. Add a Custom Widget
 
-…and auto‑hide it after `eventFadeMs` milliseconds.
+Click the “+” → Static / Custom → Custom Widget. Select it on the canvas so its settings appear on the left/right panel (depending on UI variant).
 
----
+### 3. Insert the Code
 
-## 🧪 Testing & Debugging
+- HTML tab: replace everything with the contents of [`index.html`](./index.html)  
+- CSS tab: replace with [`styles.css`](./styles.css)  
+- JS tab: replace with [`script.js`](./script.js)
+- Field tab: replace with [`fields.json`](./fields.json)
 
-- Enable **consoleLog** and/or **debugLog** in Fields and check the browser console in your overlay preview for verbose output. fileciteturn0file2  
-- Simulate events from StreamElements **Activity Feed** (or send test events) to verify additions and event banner formatting.
-- If fonts don’t load, ensure you selected them in Fields (Google Font type) and that your browser allows web fonts.
+### 5. Configure Appearance & Behavior
 
----
+Use the new grouped panels (Title, Event, Timer, Logic, Time Additions, Commands, Event Messages, Debug):
 
-## 🛡️ Permissions Tips
+- Set starting time (seconds)
+- Decide to start paused or running
+- Define seconds added per event type
+- Fine‑tune fonts, sizes, colors, backgrounds
+- Toggle which roles (Broadcaster / Mods) can issue each command
+- (Optional) Enable console or debug logging for troubleshooting
 
-- You can let **only the broadcaster** control the timer by disabling all Moderator toggles, or vice‑versa.
-- You can allow moderators to make small adjustments (increase/decrease) but not reset the clock by disabling **!set** for mods.
-- For a public “read‑only” timer, disable all commands for everyone and control it purely via events.
+### 6. Place & Test
 
----
+Resize/drag the widget on the overlay canvas. Press the “Emulate” (thunder icon) in StreamElements to simulate events (Follower / Subscriber / Cheer) and observe time increases + event banner. Open your channel’s chat (in a test or offline session) and try commands below.
 
-## 📦 Files in this Widget
+### 7. Go Live
 
-- `styles.css` — All styles and SE field bindings (colors, sizes, fonts). fileciteturn0file1  
-- `fields.json` — All configurable options exposed in the SE Fields tab. fileciteturn0file2  
-- `script.js` — Timer logic, event handlers, command parsing (paste into JS tab). *(Provided in your project repository.)*
-- `README.md` — This guide. fileciteturn0file0  
+Add the overlay browser source URL (copied from StreamElements) to your streaming software (OBS / Studio / etc.). Make sure the overlay is on top of any backgrounds and not blocked by other sources.
 
 ---
 
-## ❓ FAQ
+## ⏱ Chat Commands Reference
 
-**Q: Why isn’t the timer changing when I get a follow/sub/cheer?**  
-A: Check that your overlay is the **active** one on stream, the widget is **visible**, and that your StreamElements **Event settings** are enabled for the overlay. Also verify the relevant “Time Additions” values aren’t set to 0.
+| Command | Arguments | Description | Example | Permission Field Flags* |
+|---------|-----------|-------------|---------|-------------------------|
+| `!set` | `HH:MM:SS` (required) | Directly sets remaining time to exact value. | `!set 02:30:00` | `broadcasterSet`, `moderatorSet` |
+| `!increase` | `X` (minutes) | Adds X minutes (converted to seconds). Default if omitted = 1. | `!increase 5` | `broadcasterIncrease`, `moderatorIncrease` |
+| `!decrease` | `X` (minutes) | Subtracts X minutes (cannot go below 0). | `!decrease 10` | `broadcasterDecrease`, `moderatorDecrease` |
+| `!pause` | none | Pauses countdown (timer can still accept events if “Allow events while paused” is on). | `!pause` | `broadcasterPause`, `moderatorPause` |
+| `!start` | optional `HH:MM:SS` | Starts (or resumes) timer; optional argument overrides current remaining time. | `!start 01:00:00` | `broadcasterStart`, `moderatorStart` |
+| `!stop` | none | Stops timer (further automatic additions ignored unless restarted). | `!stop` | `broadcasterStop`, `moderatorStop` |
+| `!revert` | optional `N` | Undo last N additions (default 1). Cannot exceed history length (max 100). | `!revert 3` | `broadcasterRevert`, `moderatorRevert` |
 
-**Q: The event banner doesn’t show.**  
-A: Ensure `eventFadeMs` is not too small, and the **CSS** classes exist (`.event`, `.event-message`, `.event-effect`). The HTML must include the IDs/classes your JS updates.
+*A command executes only if either the broadcaster or a moderator issues it AND the respective permission checkbox in the fields is enabled. (Both can be enabled simultaneously.)*  
 
-**Q: Commands don’t work in chat.**  
-A: Confirm the channel bot is **joined**, the **commandsPrefix** matches what you type, and that your role has permission enabled (Broadcaster/Moderator toggles).
+Notes:
 
-**Q: Timer shows a weird font.**  
-A: Pick a **Google Font** in the Fields for Title/Timer/Event and make sure your overlay refreshed after saving.
+- Time argument format for `!set` / `!start` must be `HH:MM:SS` (two digits per segment, 00–99 hours).
+- Negative values are ignored; invalid formats default to no change.
+- The revert history stores only positive deltas that added time (including event-based additions and manual increases).
 
 ---
 
-## 📝 Changelog
+## ➕ Automatic Time Additions
 
-- **v1.0.0** — Initial public README and fields mapping.
+| Event | Field(s) | Default Seconds Added | Logic |
+|-------|----------|-----------------------|-------|
+| Follow | `followAddSeconds` | 60 | Adds exactly this amount per follow. |
+| Bits / Cheer | `bitsUnitX`, `bitsUnitYSeconds` | 100 bits → 60 s | `floor(bits / X) * Y` seconds. |
+| Sub Tier 1 | `subTier1AddSeconds` | 120 | Tier detection via plan/tier string include. |
+| Sub Tier 2 | `subTier2AddSeconds` | 240 | Same. |
+| Sub Tier 3 | `subTier3AddSeconds` | 360 | Same. |
+| Other / Unknown Sub | `subOtherAddSeconds` | 120 | Fallback if tier not parsed. |
+
+Additional Behavior:
+
+- If “Allow events while paused” is OFF, events during pause do nothing.
+- If timer hits zero: if `autoStopOnZero` is true it stops (no further countdown). Otherwise it pauses at 0.
+- Stopped state ignores further event additions until `!start` reactivates.
+
+---
+
+## 🎨 Customization Highlights
+
+| Group | What You Can Change |
+|-------|---------------------|
+| Title | Font family, size, color, displayed text (or blank to hide) |
+| Timer | Font family, size, color, background block color |
+| Event | Banner background, fade duration, fonts & colors for message/effect parts |
+| Time Additions | Seconds per follow, tiered subs, bits (X→Y mapping) |
+| Logic | Start paused, allow events while paused, auto-stop at zero, starting seconds |
+| Commands | Per-role permission toggles for each chat command |
+| Event Messages | Text shown for each event type (e.g., “Tier 1 Sub!”) |
+| Debug | Enable console and/or debug logging in browser devtools |
+
+Tip: Use StreamElements overlay preview → Right-click → Inspect (depending on browser) if you enabled logging.
+
+---
+
+## 🧪 Testing Tips
+
+1. Enable console & debug logging (Debug group) to watch internal flow.  
+2. Use StreamElements “Emulate” events to verify additions.  
+3. Check chat command permission toggles by disabling a permission and confirming the command no longer works.  
+4. Test pause logic with “Allow events while paused” toggled both ways.  
+5. Confirm revert: trigger several events → `!revert 2` → time should subtract the last two deltas.  
+
+---
+
+## 🔧 Troubleshooting
+
+| Symptom | Possible Cause | Fix |
+|---------|----------------|-----|
+| Commands ignored | Permission checkbox off | Enable the corresponding broadcaster/mod checkbox |
+| Time not added during pause | Feature disabled | Enable “Allow events while paused” |
+| Bits add 0 seconds | Not enough bits to reach threshold | Lower `bitsUnitX` or send more bits |
+| Timer stuck at 0 | Auto-stop triggered | Uncheck auto-stop or use `!start` to resume |
+| Fonts not applying | Font name mismatch / caching | Use exact Google Font name; ensure it’s requested in HTML (already templated) |
+| Event banner never hides | Fade set to 0 or very large | Adjust `eventFadeMs` |
+| Events don't seem to update the timer | Make sure you copied the contents of the script file completely into the Script tab|
+
+---
+
+## 🔐 Safety & Persistence Notes
+
+- No persistent storage is used (by design for sandbox safety). State resets on overlay refresh. If you need persistence, extend with an external service or StreamElements API store (currently not required / used).  
+- All logic runs in the browser sandbox; no network calls are made beyond Google Fonts.
+
+---
+
+## 📄 License
+
+This project is provided under the terms of the license in [`LICENSE`](./LICENSE). Review before redistributing or incorporating into packaged overlays.
+
+---
+
+## 🤝 Contributing
+
+Issues / ideas: open a GitHub issue or submit a PR. When adding new configurable fields, remember to update `fields.json` and document them here.
