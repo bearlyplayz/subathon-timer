@@ -14,7 +14,7 @@ Fully client‑side, sandbox‑safe Subathon / Marathon timer for a StreamElemen
 - Google Fonts support for title, timer, event message, and effect text
 - All configuration exposed via `fields.json` (copy–paste into StreamElements Fields tab)
 - Pure HTML/CSS/JS – no external build step; safe inside the StreamElements sandbox
-- Optional persisted state (enable the “Persist timer state across overlay reloads” checkbox) stored via StreamElements widget store
+- Optional persisted state (enable the “Persist timer state across overlay reloads” checkbox) stored via StreamElements widget store (uses a UUID storage key to avoid collisions; you can swap it for your own)
 
 ---
 
@@ -175,18 +175,34 @@ By default persistence is OFF (stateless, sandbox‑only). When you enable the f
 | Aspect | Behavior |
 |--------|----------|
 | Storage backend | `SE_API.store` (StreamElements internal per-channel key/value) |
+| Storage key (default) | `subathonTimer:c2b528d7-6d7e-48c1-8090-c24098ae8a1a` (a UUID you can replace) |
 | Writes | Throttled (≈ every 10s) and on major state changes (start/pause/stop/revert) |
 | Data saved | Remaining seconds, running/paused/stopped flags, recent history (first 20 entries) |
 | Restore timing | On widget load before first render/start |
 
 Guidelines / Caveats:
 
-- If you run multiple copies of this widget in different overlays simultaneously, they will overwrite each other because they share the same key. (Future enhancement: namespace suffix field.)
+- If you run multiple copies of this widget in different overlays simultaneously and want them INDEPENDENT, change the UUID portion of the `STATE_KEY` constant in `script.js` for each overlay. If you want them to SHARE the same timer, keep the UUID identical.
 - If the stored state says the timer was running, it resumes with the stored remaining seconds (time passage while offline is NOT subtracted).
-- Delete persistence: disable the checkbox and optionally clear the key by re‑enabling, setting remaining to 0, pausing, then disabling again (or add a manual clear via devtools: `SE_API.store.set('subathon:<channel>', null)`).
+- Delete persistence: disable the checkbox and optionally clear the key by re‑enabling, setting remaining to 0, pausing, then disabling again (or clear manually via devtools: `SE_API.store.set('subathonTimer:c2b528d7-6d7e-48c1-8090-c24098ae8a1a', null)`). If you changed the UUID, substitute your custom key.
 - History persistence is intentionally trimmed to reduce storage size.
 
-Security: Only StreamElements’ internal widget store is used; no external servers or user secrets.
+Security: Only StreamElements’ internal widget store is used; no external servers or user secrets. Replacing the UUID does not expose data; it simply segregates storage namespaces.
+
+### Customizing the Storage Key (Advanced)
+
+1. Open `script.js` and locate:  
+   `const STATE_KEY = "subathonTimer:c2b528d7-6d7e-48c1-8090-c24098ae8a1a";`
+2. Replace the UUID segment (after `subathonTimer:`) with your own (generate one using `crypto.randomUUID()` in the browser console or an online UUID tool).
+3. Save & redeploy the widget code (HTML/JS update in StreamElements).
+4. (Optional) Clear the old key to prevent stale data:  
+   `SE_API.store.set('subathonTimer:OLD-UUID', null)`
+
+Use case matrix:
+
+- Multiple overlays sharing ONE timer → keep the SAME UUID.
+- Separate independent timers (e.g., different scenes) → use DIFFERENT UUIDs.
+- Reset timer completely → assign a brand new UUID and reload overlay.
 
 ---
 
