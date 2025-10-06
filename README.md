@@ -175,8 +175,7 @@ By default persistence is OFF (stateless, sandbox‑only). When you enable the f
 | Aspect | Behavior |
 |--------|----------|
 | Storage backend | `SE_API.store` (StreamElements internal per-channel key/value) |
-| Key format | `subathon:<channelName>` |
-| Writes | Throttled (≈ every 2s) and on major state changes (start/pause/stop/revert) |
+| Writes | Throttled (≈ every 10s) and on major state changes (start/pause/stop/revert) |
 | Data saved | Remaining seconds, running/paused/stopped flags, recent history (first 20 entries) |
 | Restore timing | On widget load before first render/start |
 
