@@ -167,6 +167,13 @@
     "value": true
   },
 
+  "persistenceEnabled": {
+    "group": "Logic",
+    "type": "checkbox",
+    "label": "Persist timer state across overlay reloads",
+    "value": false
+  },
+
 
   "followAddSeconds": {
     "group": "Time Additions",

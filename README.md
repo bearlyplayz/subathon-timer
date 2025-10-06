@@ -1,6 +1,6 @@
 # StreamElements Subathon Timer — Custom Widget
 
-Fully client‑side, sandbox‑safe Subathon / Marathon timer for a StreamElements Custom Widget. It reacts to follows, subs (tiered), cheers/bits, and provides rich chat command control (start, pause, stop, set, increase/decrease, revert). All styling, behavior, and permissions are configurable through the widget field settings defined in `fields.json`.
+Fully client‑side, sandbox‑safe Subathon / Marathon timer for a StreamElements Custom Widget. It reacts to follows, subs (tiered), cheers/bits, and provides rich chat command control (start, pause, stop, set, increase/decrease, revert). All styling, behavior, and permissions are configurable through the widget field settings defined in `fields.json`. Optional persistence (disabled by default) lets the timer survive OBS / overlay reloads using `SE_API.store`.
 
 ---
 
@@ -14,6 +14,7 @@ Fully client‑side, sandbox‑safe Subathon / Marathon timer for a StreamElemen
 - Google Fonts support for title, timer, event message, and effect text
 - All configuration exposed via `fields.json` (copy–paste into StreamElements Fields tab)
 - Pure HTML/CSS/JS – no external build step; safe inside the StreamElements sandbox
+- Optional persisted state (enable the “Persist timer state across overlay reloads” checkbox) stored via StreamElements widget store
 
 ---
 
@@ -39,6 +40,7 @@ Fully client‑side, sandbox‑safe Subathon / Marathon timer for a StreamElemen
 6. JS tab → Replace with [`script.js`](./script.js).  
 7. Fields tab → Replace the full contents of [`fields.json`](./fields.json) → Save.  
 8. Adjust values (fonts, colors, seconds per event, permissions).  
+   - (Optional) Enable persistence in the Logic section if you want the timer to retain time & run/pause state across restarts.  
 9. Position & scale the widget on the overlay canvas.  
 10. Save Overlay → Launch Preview → Test by triggering events or using chat commands.  
 
@@ -162,14 +164,30 @@ Tip: Use StreamElements overlay preview → Right-click → Inspect (depending o
 | Timer stuck at 0 | Auto-stop triggered | Uncheck auto-stop or use `!start` to resume |
 | Fonts not applying | Font name mismatch / caching | Use exact Google Font name; ensure it’s requested in HTML (already templated) |
 | Event banner never hides | Fade set to 0 or very large | Adjust `eventFadeMs` |
-| Events don't seem to update the timer | Make sure you copied the contents of the script file completely into the Script tab|
+| Events don't seem to update the timer | Incomplete script copy | Re-copy full `script.js` contents into Script tab and save |
 
 ---
 
 ## 🔐 Safety & Persistence Notes
 
-- No persistent storage is used (by design for sandbox safety). State resets on overlay refresh. If you need persistence, extend with an external service or StreamElements API store (currently not required / used).  
-- All logic runs in the browser sandbox; no network calls are made beyond Google Fonts.
+By default persistence is OFF (stateless, sandbox‑only). When you enable the field:
+
+| Aspect | Behavior |
+|--------|----------|
+| Storage backend | `SE_API.store` (StreamElements internal per-channel key/value) |
+| Key format | `subathon:<channelName>` |
+| Writes | Throttled (≈ every 2s) and on major state changes (start/pause/stop/revert) |
+| Data saved | Remaining seconds, running/paused/stopped flags, recent history (first 20 entries) |
+| Restore timing | On widget load before first render/start |
+
+Guidelines / Caveats:
+
+- If you run multiple copies of this widget in different overlays simultaneously, they will overwrite each other because they share the same key. (Future enhancement: namespace suffix field.)
+- If the stored state says the timer was running, it resumes with the stored remaining seconds (time passage while offline is NOT subtracted).
+- Delete persistence: disable the checkbox and optionally clear the key by re‑enabling, setting remaining to 0, pausing, then disabling again (or add a manual clear via devtools: `SE_API.store.set('subathon:<channel>', null)`).
+- History persistence is intentionally trimmed to reduce storage size.
+
+Security: Only StreamElements’ internal widget store is used; no external servers or user secrets.
 
 ---
 
