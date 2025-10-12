@@ -91,7 +91,7 @@
     "group": "Layout",
     "type": "number",
     "label": "Spacing between elements (px)",
-    "value": 0,
+    "value": 2,
     "min": 0,
     "max": 100,
     "step": 1
@@ -260,7 +260,7 @@
     "group": "Event",
     "type": "colorpicker",
     "label": "Event Message Background Color",
-    "value": "#000000"
+    "value": "#C37DD0"
   },
 
   "eventEffectLimiter": {
@@ -287,13 +287,13 @@
     "group": "Event",
     "type": "colorpicker",
     "label": "Event Effect Text Color",
-    "value": "#FFFF00"
+    "value": "#E0DD88"
   },
   "eventEffectBackgroundColor": {
     "group": "Event",
     "type": "colorpicker",
     "label": "Event Effect Background Color",
-    "value": "#000000"
+    "value": "#C37DD0"
   },
   "timerFontFamily": {
     "group": "Timer",
