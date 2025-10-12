@@ -11,10 +11,17 @@ Fully client‑side, sandbox‑safe Subathon / Marathon timer for a StreamElemen
 - Optional start paused / auto stop at zero / allow events while paused
 - Undo (revert) the last N time additions (history capped at 100)
 - Event message banner with separate message/effect styling & timed fade out
+- **Enhanced Visual Configuration**: Comprehensive styling controls including:
+  - Layout spacing and padding controls
+  - Glow effects for title, timer, and events
+  - Drop shadow configuration with offset and blur controls
+  - Border customization with color, width, and radius
+  - Text glow effects for timer numbers
+  - Individual padding controls for timer box
 - Google Fonts support for title, timer, event message, and effect text
 - All configuration exposed via `fields.json` (copy–paste into StreamElements Fields tab)
 - Pure HTML/CSS/JS – no external build step; safe inside the StreamElements sandbox
-- Optional persisted state (enable the “Persist timer state across overlay reloads” checkbox) stored via StreamElements widget store (uses a UUID storage key to avoid collisions; you can swap it for your own)
+- Optional persisted state (enable the "Persist timer state across overlay reloads" checkbox) stored via StreamElements widget store (uses a UUID storage key to avoid collisions; you can swap it for your own)
 
 ---
 
@@ -131,14 +138,24 @@ Additional Behavior:
 
 | Group | What You Can Change |
 |-------|---------------------|
-| Title | Font family, size, color, displayed text (or blank to hide) |
-| Timer | Font family, size, color, background block color |
-| Event | Banner background, fade duration, fonts & colors for message/effect parts |
+| Title | Font family, size, color, displayed text (or blank to hide), glow effects, drop shadow |
+| Timer | Font family, size, color, background block color, borders, glow effects, drop shadows, text glow, padding |
+| Event | Banner background, fade duration, fonts & colors for message/effect parts, borders, glow effects, drop shadows |
+| Layout | Spacing between elements, container padding, individual element margins |
 | Time Additions | Seconds per follow, tiered subs, bits (X→Y mapping) |
 | Logic | Start paused, allow events while paused, auto-stop at zero, starting seconds |
 | Commands | Per-role permission toggles for each chat command |
-| Event Messages | Text shown for each event type (e.g., “Tier 1 Sub!”) |
+| Event Messages | Text shown for each event type (e.g., "Tier 1 Sub!") |
 | Debug | Enable console and/or debug logging in browser devtools |
+
+**New Visual Effects:**
+- **Glow Effects**: Configurable glow around title, timer box, timer text, and event boxes
+- **Drop Shadows**: Customizable shadows with X/Y offset, blur, and color for all elements
+- **Borders**: Optional borders with configurable width, color, and radius for timer and event boxes
+- **Spacing Controls**: Fine-tune distances between elements and padding
+- **Advanced Padding**: Separate horizontal and vertical padding controls for timer
+
+For detailed information about all visual configuration options, see [VISUAL_CONFIGURATION.md](./VISUAL_CONFIGURATION.md).
 
 Tip: Use StreamElements overlay preview → Right-click → Inspect (depending on browser) if you enabled logging.
 

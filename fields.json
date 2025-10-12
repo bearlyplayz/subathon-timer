@@ -26,6 +26,103 @@
     "label": "Timer Name (Leave blank for no title)",
     "value": "Subathon Timer"
   },
+  "titleGlowEnabled": {
+    "group": "Title",
+    "type": "checkbox",
+    "label": "Enable title glow effect",
+    "value": false
+  },
+  "titleGlowColor": {
+    "group": "Title",
+    "type": "colorpicker",
+    "label": "Title glow color",
+    "value": "#FFFFFF"
+  },
+  "titleGlowSize": {
+    "group": "Title",
+    "type": "number",
+    "label": "Title glow size (px)",
+    "value": 10,
+    "min": 0,
+    "max": 50,
+    "step": 1
+  },
+  "titleShadowEnabled": {
+    "group": "Title",
+    "type": "checkbox",
+    "label": "Enable title drop shadow",
+    "value": true
+  },
+  "titleShadowColor": {
+    "group": "Title",
+    "type": "colorpicker",
+    "label": "Title shadow color",
+    "value": "#000000"
+  },
+  "titleShadowX": {
+    "group": "Title",
+    "type": "number",
+    "label": "Title shadow X offset (px)",
+    "value": 0,
+    "min": -50,
+    "max": 50,
+    "step": 1
+  },
+  "titleShadowY": {
+    "group": "Title",
+    "type": "number",
+    "label": "Title shadow Y offset (px)",
+    "value": 2,
+    "min": -50,
+    "max": 50,
+    "step": 1
+  },
+  "titleShadowBlur": {
+    "group": "Title",
+    "type": "number",
+    "label": "Title shadow blur (px)",
+    "value": 12,
+    "min": 0,
+    "max": 50,
+    "step": 1
+  },
+
+  "layoutSpacing": {
+    "group": "Layout",
+    "type": "number",
+    "label": "Spacing between elements (px)",
+    "value": 0,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "containerPadding": {
+    "group": "Layout",
+    "type": "number",
+    "label": "Container padding (px)",
+    "value": 0,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "titleMarginBottom": {
+    "group": "Layout",
+    "type": "number",
+    "label": "Extra space below title (px)",
+    "value": 0,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "timerMarginBottom": {
+    "group": "Layout",
+    "type": "number",
+    "label": "Extra space below timer (px)",
+    "value": 0,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
 
 
   "eventFadeMs": {
@@ -42,6 +139,96 @@
     "type": "colorpicker",
     "label": "Event Box Background Color",
     "value": "#000000"
+  },
+  "eventBorderEnabled": {
+    "group": "Event",
+    "type": "checkbox",
+    "label": "Enable event border",
+    "value": false
+  },
+  "eventBorderColor": {
+    "group": "Event",
+    "type": "colorpicker",
+    "label": "Event border color",
+    "value": "#FFFFFF"
+  },
+  "eventBorderWidth": {
+    "group": "Event",
+    "type": "number",
+    "label": "Event border width (px)",
+    "value": 1,
+    "min": 1,
+    "max": 10,
+    "step": 1
+  },
+  "eventBorderRadius": {
+    "group": "Event",
+    "type": "number",
+    "label": "Event border radius (px)",
+    "value": 12,
+    "min": 0,
+    "max": 30,
+    "step": 1
+  },
+  "eventGlowEnabled": {
+    "group": "Event",
+    "type": "checkbox",
+    "label": "Enable event glow effect",
+    "value": false
+  },
+  "eventGlowColor": {
+    "group": "Event",
+    "type": "colorpicker",
+    "label": "Event glow color",
+    "value": "#FFFFFF"
+  },
+  "eventGlowSize": {
+    "group": "Event",
+    "type": "number",
+    "label": "Event glow size (px)",
+    "value": 8,
+    "min": 0,
+    "max": 30,
+    "step": 1
+  },
+  "eventShadowEnabled": {
+    "group": "Event",
+    "type": "checkbox",
+    "label": "Enable event drop shadow",
+    "value": false
+  },
+  "eventShadowColor": {
+    "group": "Event",
+    "type": "colorpicker",
+    "label": "Event shadow color",
+    "value": "#000000"
+  },
+  "eventShadowX": {
+    "group": "Event",
+    "type": "number",
+    "label": "Event shadow X offset (px)",
+    "value": 0,
+    "min": -30,
+    "max": 30,
+    "step": 1
+  },
+  "eventShadowY": {
+    "group": "Event",
+    "type": "number",
+    "label": "Event shadow Y offset (px)",
+    "value": 2,
+    "min": -30,
+    "max": 30,
+    "step": 1
+  },
+  "eventShadowBlur": {
+    "group": "Event",
+    "type": "number",
+    "label": "Event shadow blur (px)",
+    "value": 4,
+    "min": 0,
+    "max": 30,
+    "step": 1
   },
   "eventMessageLimiter": {
     "group": "Event",
@@ -108,8 +295,6 @@
     "label": "Event Effect Background Color",
     "value": "#000000"
   },
-
-
   "timerFontFamily": {
     "group": "Timer",
     "type": "googleFont",
@@ -128,14 +313,143 @@
   "timerColor": {
     "group": "Timer",
     "type": "colorpicker",
-    "label": "Timer Color",
-    "value": "#FFFFFF"
+    "label": "Timer Text Color",
+    "value": "#E0DD88"
   },
   "timerBackgroundColor": {
     "group": "Timer",
     "type": "colorpicker",
     "label": "Timer Background Color",
+    "value": "#C37DD0"
+  },
+  "timerBorderEnabled": {
+    "group": "Timer",
+    "type": "checkbox",
+    "label": "Enable timer border",
+    "value": false
+  },
+  "timerBorderColor": {
+    "group": "Timer",
+    "type": "colorpicker",
+    "label": "Timer border color",
+    "value": "#FFFFFF"
+  },
+  "timerBorderWidth": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer border width (px)",
+    "value": 2,
+    "min": 1,
+    "max": 20,
+    "step": 1
+  },
+  "timerBorderRadius": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer border radius (px)",
+    "value": 16,
+    "min": 0,
+    "max": 50,
+    "step": 1
+  },
+  "timerGlowEnabled": {
+    "group": "Timer",
+    "type": "checkbox",
+    "label": "Enable timer glow effect",
+    "value": false
+  },
+  "timerGlowColor": {
+    "group": "Timer",
+    "type": "colorpicker",
+    "label": "Timer glow color",
+    "value": "#C37DD0"
+  },
+  "timerGlowSize": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer glow size (px)",
+    "value": 15,
+    "min": 0,
+    "max": 50,
+    "step": 1
+  },
+  "timerShadowEnabled": {
+    "group": "Timer",
+    "type": "checkbox",
+    "label": "Enable timer drop shadow",
+    "value": false
+  },
+  "timerShadowColor": {
+    "group": "Timer",
+    "type": "colorpicker",
+    "label": "Timer shadow color",
     "value": "#000000"
+  },
+  "timerShadowX": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer shadow X offset (px)",
+    "value": 0,
+    "min": -50,
+    "max": 50,
+    "step": 1
+  },
+  "timerShadowY": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer shadow Y offset (px)",
+    "value": 4,
+    "min": -50,
+    "max": 50,
+    "step": 1
+  },
+  "timerShadowBlur": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer shadow blur (px)",
+    "value": 8,
+    "min": 0,
+    "max": 50,
+    "step": 1
+  },
+  "timerTextGlowEnabled": {
+    "group": "Timer",
+    "type": "checkbox",
+    "label": "Enable timer text glow",
+    "value": false
+  },
+  "timerTextGlowColor": {
+    "group": "Timer",
+    "type": "colorpicker",
+    "label": "Timer text glow color",
+    "value": "#FFFFFF"
+  },
+  "timerTextGlowSize": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer text glow size (px)",
+    "value": 5,
+    "min": 0,
+    "max": 30,
+    "step": 1
+  },
+  "timerPaddingHorizontal": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer horizontal padding (px)",
+    "value": 24,
+    "min": 0,
+    "max": 100,
+    "step": 1
+  },
+  "timerPaddingVertical": {
+    "group": "Timer",
+    "type": "number",
+    "label": "Timer vertical padding (px)",
+    "value": 16,
+    "min": 0,
+    "max": 100,
+    "step": 1
   },
   "startSeconds": {
     "group": "Logic",

@@ -318,6 +318,81 @@ function schedulePersist(forceImmediate = false) {
   }, PERSIST_THROTTLE_MS);
 }
 
+/* -------------------- Visual Effects Management -------------------- */
+function applyVisualEffects() {
+  debug("Applying visual effects");
+  
+  // Title effects
+  const title = $("#title");
+  if (title) {
+    if (!F.titleShadowEnabled) {
+      title.classList.add("no-shadow");
+    } else {
+      title.classList.remove("no-shadow");
+    }
+    
+    if (!F.titleGlowEnabled) {
+      title.classList.add("no-glow");
+    } else {
+      title.classList.remove("no-glow");
+    }
+  }
+  
+  // Timer effects
+  const timer = $("#timer");
+  if (timer) {
+    if (!F.timerBorderEnabled) {
+      timer.classList.add("no-border");
+    } else {
+      timer.classList.remove("no-border");
+    }
+    
+    if (!F.timerGlowEnabled) {
+      timer.classList.add("no-glow");
+    } else {
+      timer.classList.remove("no-glow");
+    }
+    
+    if (!F.timerShadowEnabled) {
+      timer.classList.add("no-shadow");
+    } else {
+      timer.classList.remove("no-shadow");
+    }
+  }
+  
+  // Timer text effects
+  const timerElements = $all(".timer-font");
+  timerElements.forEach(el => {
+    if (!F.timerTextGlowEnabled) {
+      el.classList.add("no-text-glow");
+    } else {
+      el.classList.remove("no-text-glow");
+    }
+  });
+  
+  // Event effects
+  const event = $("#event");
+  if (event) {
+    if (!F.eventBorderEnabled) {
+      event.classList.add("no-border");
+    } else {
+      event.classList.remove("no-border");
+    }
+    
+    if (!F.eventGlowEnabled) {
+      event.classList.add("no-glow");
+    } else {
+      event.classList.remove("no-glow");
+    }
+    
+    if (!F.eventShadowEnabled) {
+      event.classList.add("no-shadow");
+    } else {
+      event.classList.remove("no-shadow");
+    }
+  }
+}
+
 /* -------------------- StreamElements Hooks -------------------- */
 window.addEventListener("onWidgetLoad", async (obj) => {
   debug("Widget load", obj);
@@ -335,6 +410,7 @@ window.addEventListener("onWidgetLoad", async (obj) => {
     debug("Restored from persistence?", restored);
   }
   render();
+  applyVisualEffects();
   if (state.running && !state.paused) startTimer();
   log("Initialized", state, F, { restored });
   schedulePersist(true);
