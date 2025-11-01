@@ -311,9 +311,14 @@ function schedulePersist(forceImmediate = false) {
     debug("Forcing immediate persist");
     return persistState(true);
   }
-  clearTimeout(persistTO);
+  if (persistTO) {
+    debug("Persist already scheduled; skipping reschedule");
+    return;
+  }
   persistTO = setTimeout(() => {
     debug("Persist timeout fired");
+    const handle = persistTO;
+    persistTO = null;
     persistState();
   }, PERSIST_THROTTLE_MS);
 }
