@@ -3,7 +3,7 @@
     "group": "Title",
     "type": "googleFont",
     "label": "Select a font for the title:",
-    "value": "Finger Paint"
+    "value": "Roboto"
   },
   "titleFontSize": {
     "group": "Title",
@@ -239,7 +239,7 @@
     "group": "Event",
     "type": "googleFont",
     "label": "Font for Event Message",
-    "value": "Finger Paint"
+    "value": "Roboto"
   },
   "eventMessageFontSize": {
     "group": "Event",
@@ -260,7 +260,7 @@
     "group": "Event",
     "type": "colorpicker",
     "label": "Event Message Background Color",
-    "value": "#C37DD0"
+    "value": "#000000"
   },
 
   "eventEffectLimiter": {
@@ -272,7 +272,7 @@
     "group": "Event",
     "type": "googleFont",
     "label": "Font for Event Effect",
-    "value": "Finger Paint"
+    "value": "Roboto"
   },
   "eventEffectFontSize": {
     "group": "Event",
@@ -287,19 +287,19 @@
     "group": "Event",
     "type": "colorpicker",
     "label": "Event Effect Text Color",
-    "value": "#E0DD88"
+    "value": "#FFFFFF"
   },
   "eventEffectBackgroundColor": {
     "group": "Event",
     "type": "colorpicker",
     "label": "Event Effect Background Color",
-    "value": "#C37DD0"
+    "value": "#000000"
   },
   "timerFontFamily": {
     "group": "Timer",
     "type": "googleFont",
     "label": "Select a font for the timer:",
-    "value": "Finger Paint"
+    "value": "Roboto"
   },
   "timerFontSize": {
     "group": "Timer",
@@ -314,13 +314,13 @@
     "group": "Timer",
     "type": "colorpicker",
     "label": "Timer Text Color",
-    "value": "#E0DD88"
+    "value": "#FFFFFF"
   },
   "timerBackgroundColor": {
     "group": "Timer",
     "type": "colorpicker",
     "label": "Timer Background Color",
-    "value": "#C37DD0"
+    "value": "#000000"
   },
   "timerBorderEnabled": {
     "group": "Timer",
@@ -362,7 +362,7 @@
     "group": "Timer",
     "type": "colorpicker",
     "label": "Timer glow color",
-    "value": "#C37DD0"
+    "value": "#FFFFFF"
   },
   "timerGlowSize": {
     "group": "Timer",
