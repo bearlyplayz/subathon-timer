@@ -369,7 +369,6 @@ function schedulePersist(forceImmediate = false) {
   }
   persistTO = setTimeout(() => {
     debug("Persist timeout fired");
-    const handle = persistTO;
     persistTO = null;
     persistState();
   }, PERSIST_THROTTLE_MS);
