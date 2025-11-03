@@ -463,7 +463,7 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   state.tickRemainderMs = 0;
   state.runElapsedMs = 0;
   state.showingTotal = false;
-  const titleEl = document.querySelector('#title');
+  const titleEl = $("#title");
   state.originalTitleText = titleEl ? (titleEl.textContent || F.titleText || "") : (F.titleText || "");
   let restored = false;
   if (F.persistenceEnabled) {
