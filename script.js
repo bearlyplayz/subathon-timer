@@ -71,6 +71,10 @@ let state = {
   paused: true,
   stopped: false,
   lastTick: Date.now(),
+  tickRemainderMs: 0,
+  runElapsedMs: 0,
+  showingTotal: false,
+  originalTitleText: "",
 };
 
 function stopTimer() {
@@ -89,8 +93,10 @@ function startTimer() {
   state.paused = false;
   state.stopped = false;
   if (intervalId) clearInterval(intervalId);
+  if (state.showingTotal && state.remainingSeconds > 0) restoreDisplayAfterTotal();
   state.lastTick = Date.now();
-  intervalId = setInterval(tick, 1000);
+  state.tickRemainderMs = 0;
+  intervalId = setInterval(tick, 250);
   schedulePersist(true);
 }
 
@@ -113,6 +119,32 @@ function render() {
   if (hour) hour.textContent = String(h).padStart(2, "0");
   if (minute) minute.textContent = String(m).padStart(2, "0");
   if (second) second.textContent = String(s).padStart(2, "0");
+}
+
+function renderTotalRunTime() {
+  const totalSec = Math.max(0, Math.floor(state.runElapsedMs / 1000));
+  const { h, m, s } = toHMS(totalSec);
+  const hour = $("#hour"),
+    minute = $("#minute"),
+    second = $("#second");
+  if (hour) hour.textContent = String(h).padStart(2, "0");
+  if (minute) minute.textContent = String(m).padStart(2, "0");
+  if (second) second.textContent = String(s).padStart(2, "0");
+}
+
+function showTotalDisplay() {
+  const title = $("#title");
+  if (!state.originalTitleText && title) state.originalTitleText = title.textContent || "";
+  if (title) title.textContent = "Total Run Time";
+  renderTotalRunTime();
+  state.showingTotal = true;
+}
+
+function restoreDisplayAfterTotal() {
+  const title = $("#title");
+  if (title && state.originalTitleText) title.textContent = state.originalTitleText;
+  state.showingTotal = false;
+  render();
 }
 
 let eventHideTO = null;
@@ -177,6 +209,10 @@ function applyDelta(
   const prev = state.remainingSeconds;
   const now = Math.max(0, prev + Number(deltaSec || 0));
   state.remainingSeconds = now;
+  // If we were showing the total after completion and time gets added back, restore the normal display
+  if (state.showingTotal && state.remainingSeconds > 0) {
+    restoreDisplayAfterTotal();
+  }
   if (record && deltaSec) {
     eventHistory.unshift({
       ts: Date.now(),
@@ -229,19 +265,39 @@ function revert(n = 1) {
 function tick() {
   debug("Tick");
   const now = Date.now();
-  const elapsed = Math.floor((now - state.lastTick) / 1000);
-  state.lastTick = now;
-  if (state.running && !state.paused && !state.stopped && elapsed > 0) {
-    if (state.remainingSeconds > 0) {
-      state.remainingSeconds = Math.max(0, state.remainingSeconds - elapsed);
-      render();
-      schedulePersist();
-    } else if (F.autoStopOnZero) {
-      stopTimer();
-    } else {
-      pauseTimer();
+  if (state.running && !state.paused && !state.stopped) {
+    const deltaMs = now - state.lastTick;
+    state.runElapsedMs += Math.max(0, deltaMs);
+
+    const totalMs = state.tickRemainderMs + Math.max(0, deltaMs);
+    const wholeSeconds = Math.floor(totalMs / 1000);
+    state.tickRemainderMs = totalMs % 1000;
+
+    if (wholeSeconds > 0) {
+      if (state.remainingSeconds > 0) {
+        state.remainingSeconds = Math.max(0, state.remainingSeconds - wholeSeconds);
+        render();
+        schedulePersist();
+        if (state.remainingSeconds === 0) {
+          showTotalDisplay();
+          if (F.autoStopOnZero) {
+            stopTimer();
+          } else {
+            pauseTimer();
+          }
+        }
+      } else {
+        if (!state.showingTotal) showTotalDisplay();
+        // Only stop/pause if not already stopped/paused
+        if (F.autoStopOnZero) {
+          if (!state.stopped) stopTimer();
+        } else {
+          if (!state.paused) pauseTimer();
+        }
+      }
     }
   }
+  state.lastTick = now;
 }
 
 /* -------------------- Persistence -------------------- */
@@ -311,11 +367,86 @@ function schedulePersist(forceImmediate = false) {
     debug("Forcing immediate persist");
     return persistState(true);
   }
-  clearTimeout(persistTO);
+  if (persistTO) {
+    debug("Persist already scheduled; skipping reschedule");
+    return;
+  }
   persistTO = setTimeout(() => {
     debug("Persist timeout fired");
+    persistTO = null;
     persistState();
   }, PERSIST_THROTTLE_MS);
+}
+
+/* -------------------- Visual Effects Management -------------------- */
+function applyVisualEffects() {
+  debug("Applying visual effects");
+  
+  const title = $("#title");
+  if (title) {
+    if (!F.titleShadowEnabled) {
+      title.classList.add("no-shadow");
+    } else {
+      title.classList.remove("no-shadow");
+    }
+    
+    if (!F.titleGlowEnabled) {
+      title.classList.add("no-glow");
+    } else {
+      title.classList.remove("no-glow");
+    }
+  }
+  
+  const timer = $("#timer");
+  if (timer) {
+    if (!F.timerBorderEnabled) {
+      timer.classList.add("no-border");
+    } else {
+      timer.classList.remove("no-border");
+    }
+    
+    if (!F.timerGlowEnabled) {
+      timer.classList.add("no-glow");
+    } else {
+      timer.classList.remove("no-glow");
+    }
+    
+    if (!F.timerShadowEnabled) {
+      timer.classList.add("no-shadow");
+    } else {
+      timer.classList.remove("no-shadow");
+    }
+  }
+  
+  const timerElements = $all(".timer-font");
+  timerElements.forEach(el => {
+    if (!F.timerTextGlowEnabled) {
+      el.classList.add("no-text-glow");
+    } else {
+      el.classList.remove("no-text-glow");
+    }
+  });
+  
+  const event = $("#event");
+  if (event) {
+    if (!F.eventBorderEnabled) {
+      event.classList.add("no-border");
+    } else {
+      event.classList.remove("no-border");
+    }
+    
+    if (!F.eventGlowEnabled) {
+      event.classList.add("no-glow");
+    } else {
+      event.classList.remove("no-glow");
+    }
+    
+    if (!F.eventShadowEnabled) {
+      event.classList.add("no-shadow");
+    } else {
+      event.classList.remove("no-shadow");
+    }
+  }
 }
 
 /* -------------------- StreamElements Hooks -------------------- */
@@ -329,12 +460,18 @@ window.addEventListener("onWidgetLoad", async (obj) => {
   state.running = Boolean(!F.startPaused || false);
   state.paused = !state.running;
   state.stopped = false;
+  state.tickRemainderMs = 0;
+  state.runElapsedMs = 0;
+  state.showingTotal = false;
+  const titleEl = $("#title");
+  state.originalTitleText = titleEl ? (titleEl.textContent || F.titleText || "") : (F.titleText || "");
   let restored = false;
   if (F.persistenceEnabled) {
     restored = await loadPersistedState();
     debug("Restored from persistence?", restored);
   }
   render();
+  applyVisualEffects();
   if (state.running && !state.paused) startTimer();
   log("Initialized", state, F, { restored });
   schedulePersist(true);

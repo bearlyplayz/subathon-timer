@@ -5,38 +5,72 @@ body {
 
 .container {
   display: grid; 
-  gap: 12px; 
+  gap: {{layoutSpacing}}px; 
   width: 100vw; 
   height: 100vh; 
   place-content: center;
-  padding: 20px; 
+  padding: {{containerPadding}}px; 
   background: transparent;
 }
 
 #title {
   font-family: {{titleFontFamily}};
-  margin: 0; 
+  margin: 0 0 {{titleMarginBottom}}px 0; 
   text-align: center; 
   color: {{titleColor}}; 
   font-size: {{titleFontSize}}px;
-  text-shadow: 0 2px 12px rgba(0,0,0,.35);
+  text-shadow: {{titleShadowX}}px {{titleShadowY}}px {{titleShadowBlur}}px {{titleShadowColor}};
+  filter: drop-shadow(0 0 {{titleGlowSize}}px {{titleGlowColor}});
+}
+
+/* Hide title effects when disabled */
+#title.no-shadow {
+  text-shadow: none;
+}
+#title.no-glow {
+  filter: none;
 }
 
 .timer {
-  display: inline-flex; gap: .25em;
+  display: inline-flex; 
+  gap: .25em;
   align-items: baseline; 
   justify-content: center;
-  padding: 16px 24px; 
-  border-radius: 16px; 
+  padding: {{timerPaddingVertical}}px {{timerPaddingHorizontal}}px; 
+  border-radius: {{timerBorderRadius}}px; 
   background: {{timerBackgroundColor}};
   line-height: 1;
+  margin-bottom: {{timerMarginBottom}}px;
+  border: {{timerBorderWidth}}px solid {{timerBorderColor}};
+  box-shadow: 
+    0 0 {{timerGlowSize}}px {{timerGlowColor}},
+    {{timerShadowX}}px {{timerShadowY}}px {{timerShadowBlur}}px {{timerShadowColor}};
+}
+
+/* Timer effect toggles */
+.timer.no-border {
+  border: none;
+}
+.timer.no-glow {
+  box-shadow: {{timerShadowX}}px {{timerShadowY}}px {{timerShadowBlur}}px {{timerShadowColor}};
+}
+.timer.no-shadow {
+  box-shadow: 0 0 {{timerGlowSize}}px {{timerGlowColor}};
+}
+.timer.no-glow.no-shadow {
+  box-shadow: none;
 }
 
 .timer-font {
   font-family: {{timerFontFamily}};
   font-weight: 700; 
   font-size: {{timerFontSize}}px; 
-  color: {{timerColor}}; 
+  color: {{timerColor}};
+  text-shadow: 0 0 {{timerTextGlowSize}}px {{timerTextGlowColor}};
+}
+
+.timer-font.no-text-glow {
+  text-shadow: none;
 }
 
 .event {
@@ -47,12 +81,30 @@ body {
   min-height: 48px; 
   max-width: 90vw;
   padding: 8px 12px; 
-  border-radius: 12px; 
+  border-radius: {{eventBorderRadius}}px; 
   background: {{eventBackgroundColor}};
   transition: opacity 300ms ease;
+  border: {{eventBorderWidth}}px solid {{eventBorderColor}};
+  box-shadow: 
+    0 0 {{eventGlowSize}}px {{eventGlowColor}},
+    {{eventShadowX}}px {{eventShadowY}}px {{eventShadowBlur}}px {{eventShadowColor}};
 }
-.event.hide { opacity: 0; }
 
+/* Event effect toggles */
+.event.no-border {
+  border: none;
+}
+.event.no-glow {
+  box-shadow: {{eventShadowX}}px {{eventShadowY}}px {{eventShadowBlur}}px {{eventShadowColor}};
+}
+.event.no-shadow {
+  box-shadow: 0 0 {{eventGlowSize}}px {{eventGlowColor}};
+}
+.event.no-glow.no-shadow {
+  box-shadow: none;
+}
+
+.event.hide { opacity: 0; }
 
 .event-message {
   font-family: {{eventMessageFontFamily}};
