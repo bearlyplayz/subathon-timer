@@ -288,8 +288,12 @@ function tick() {
         }
       } else {
         if (!state.showingTotal) showTotalDisplay();
-        if (F.autoStopOnZero) stopTimer();
-        else pauseTimer();
+        // Only stop/pause if not already stopped/paused
+        if (F.autoStopOnZero) {
+          if (!state.stopped) stopTimer();
+        } else {
+          if (!state.paused) pauseTimer();
+        }
       }
     }
   }
